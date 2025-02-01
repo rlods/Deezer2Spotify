@@ -4,8 +4,8 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import deezer
 
-SPOTIFY_FAVORITE_TRACKS_BATCH_SIZE = 50
-SPOTIFY_PLAYLIST_TRACKS_BATCH_SIZE = 100
+SPOTIFY_FAVORITE_TRACKS_BATCH_SIZE = 50 # Spotify API limit
+SPOTIFY_PLAYLIST_TRACKS_BATCH_SIZE = 100 # Spotify API limit
 
 class MusicSync:
     def __init__(self):
@@ -38,7 +38,7 @@ class MusicSync:
 
         print("Found", len(favorite_tracks), "deezer favorites")
         
-        # Process tracks by batches of 50 (Spotify API limit)
+        # Process tracks by batches
         for i in range(0, len(favorite_tracks), SPOTIFY_FAVORITE_TRACKS_BATCH_SIZE):
             favorite_tracks_batch = favorite_tracks[i:i + SPOTIFY_FAVORITE_TRACKS_BATCH_SIZE]
             spotify_tracks = self._deezer_tracks_to_spotify_tracks(favorite_tracks_batch)
@@ -52,9 +52,11 @@ class MusicSync:
         spotify_user_id = self.spotify.current_user()['id']
         
         for deezer_playlist in deezer_playlists:
-            if deezer_playlist.title == "Coups de cœur":
+            if deezer_playlist.title == "Coups de cœur": # Ignore favorites playlist
                 continue
             
+            playlist_tracks = deezer_playlist.get_tracks()
+
             # Create Spotify playlist
             spotify_playlist = self.spotify.user_playlist_create(
                 user=spotify_user_id,
@@ -62,8 +64,7 @@ class MusicSync:
                 public=False
             )
             
-            # Get tracks from Deezer playlist
-            playlist_tracks = deezer_playlist.get_tracks()
+            # Process tracks by batches
             for i in range(0, len(playlist_tracks), SPOTIFY_PLAYLIST_TRACKS_BATCH_SIZE):
                 playlist_tracks_batch = playlist_tracks[i:i + SPOTIFY_PLAYLIST_TRACKS_BATCH_SIZE]
                 spotify_tracks = self._deezer_tracks_to_spotify_tracks(playlist_tracks_batch)
