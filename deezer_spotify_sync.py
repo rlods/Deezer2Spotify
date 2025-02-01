@@ -36,7 +36,7 @@ class MusicSync:
         deezer_user = self.deezer.get_user(self.deezer_user_id)
         favorite_tracks = deezer_user.get_tracks()
 
-        print("Found", len(favorite_tracks), "deezer favorites")
+        print(f"Found {len(favorite_tracks)} deezer favorites")
         
         # Process tracks by batches
         for i in range(0, len(favorite_tracks), SPOTIFY_FAVORITE_TRACKS_BATCH_SIZE):
@@ -50,6 +50,8 @@ class MusicSync:
         deezer_user = self.deezer.get_user(self.deezer_user_id)
         deezer_playlists = deezer_user.get_playlists()
         spotify_user_id = self.spotify.current_user()['id']
+        
+        print(f"Found {len(deezer_playlists)} deezer playlists")
         
         for deezer_playlist in deezer_playlists:
             if deezer_playlist.title == "Coups de cœur": # Ignore favorites playlist
