@@ -1,29 +1,35 @@
 # Deezer2Spotify
+
 Simple favorites and playlists importer from Deezer to Spotify
 
 ## Usage
 
-1. Clone the repository
+1/ Clone the repository
 
-gh repo clone rlods/Deezer2Spotify
+  - `gh repo clone rlods/Deezer2Spotify`
 
-2. Install the required dependencies:
+2/ Install the required dependencies:
 
-pip install -r requirements.txt
+  - `pip install -r requirements.txt`
 
-3. Set up your Spotify Developer account:
+3/ Set up your Spotify Developer account:
 
-Go to https://developer.spotify.com/dashboard
-Create a new application
-Get your Client ID and Client Secret
-Add http://localhost:8888/callback to your Redirect URIs in the app settings
+  - Go to https://developer.spotify.com/dashboard
 
-4. Get your Deezer user ID:
-Go to your Deezer profile
-Your user ID will be in the URL (e.g., https://www.deezer.com/profile/12345678)
+  - Create a new application
 
-4. Update the .env file with your credentials
+  - Get your Client ID and Client Secret
 
-5. Run the script:
+  - Add http://localhost:8888/callback to your Redirect URIs in the app settings
 
-python deezer_spotify_sync.py
+4/ Get your Deezer user ID:
+
+  - Go to your Deezer profile
+
+  - Your user ID will be in the URL (e.g., https://www.deezer.com/profile/12345678)
+
+5/ Update the `.env` file with your credentials
+
+6/ Run the script:
+
+  - `python deezer_spotify_sync.py`
